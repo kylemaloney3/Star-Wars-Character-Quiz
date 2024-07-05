@@ -32,6 +32,7 @@ html {
   display: block;
   margin: auto;
   width: auto;
+  max-width: 100%;
 }
 .phone {
   display: block;
@@ -40,13 +41,13 @@ html {
 }
 @media screen and (max-width: 992) {
   .camp {
-    max-width: 100px;
+    max-width: 100%;
     height: auto;
   }       
 }
 @media screen and (max-width: 600) {
   .camp {
-    max-width: 100px;
+    max-width: 100%;
     height: auto;
   }       
 }
