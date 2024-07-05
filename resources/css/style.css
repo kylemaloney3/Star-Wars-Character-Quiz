@@ -38,3 +38,15 @@ html {
   margin: auto;
   padding-top: 30px;
 }
+@media screen and (max-width: 992) {
+  .camp {
+    max-width: 100px;
+    height: auto;
+  }       
+}
+@media screen and (max-width: 600) {
+  .camp {
+    max-width: 100px;
+    height: auto;
+  }       
+}
