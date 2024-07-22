@@ -1,0 +1,158 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+html {
+    font-family: Verdana, sans-serif;
+    background-color: black;
+    color: white;
+}
+#nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: maroon;
+    padding: 25px;
+}
+#nav a {
+    color: white;
+    text-decoration: none;
+}
+#title {
+    text-align: center;
+    padding-top: 45px;
+}
+#img {
+    display: block;
+    margin: 0 auto;
+    width: 40%;
+    max-width: 650px;
+    min-width: 650px;
+    height: 500px;
+    margin: 0 auto 75px;
+    object-fit: cover;
+}
+#character-img {
+    padding: 25px 0px;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+#description {
+    text-align: center;
+    font-size: 24px;
+}
+#answers {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+button:not(:last-child) {
+    padding: 15px;
+    margin: 5px 0;
+    color: white;
+    background-color: slategray;
+    font-size: 18px;
+    border: none;
+}
+button:hover {
+    background-color: orange;
+    cursor: pointer;
+}
+button:not(:last-child):focus {
+    background-color: white;
+    color: black;
+}
+#submit {
+    background-color: skyblue;
+    width: 150px;
+    height: 40px;
+    margin: 15px auto;
+    color: black;
+    text-align: center;
+    font-size: 18px;
+    border: none;
+}
+#submit:hover {
+    background-color: orange;
+    cursor: pointer;
+}
+#submit:focus {
+    background-color: darkgray;
+    cursor: default;
+}
+#submit.disabled {
+    background-color: darkgray;
+    cursor: default;
+}
+#submit.clicked {
+    background-color: darkgray;
+    cursor: default;
+}
+.unclickable {
+    pointer-events: none;
+    background-color: darkgray;
+    cursor: default;
+}
+#next-page {
+    background-color: lightyellow;
+    display: flex;
+    width: 250px;
+    height: 60px;
+    margin: 10px auto;
+    color: black;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    font-size: 18px;
+    border: none;
+    padding-top: 20px;
+}
+#next-page:hover {
+    background-color: orange;
+}
+#quit {
+    background-color: lightyellow;
+    display: flex;
+    width: 250px;
+    height: 60px;
+    margin: 15px auto 0;
+    color: black;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    font-size: 18px;
+    border: none;
+    padding-top: 20px;
+}
+#quit:hover {
+    background-color: maroon;
+    color: white;
+}
+#quit a {
+    text-decoration: none;
+    color: black;
+}
+#line {
+    border: 2px solid maroon;
+    width: 60%;
+    margin: 0 auto;
+    opacity: 50%;
+}
+#feedback-message {
+    display: flex;
+    margin: 5px auto;
+    color: red;
+    width: 50%;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 10px;
+}
+#feedback-message.green {
+    color: green;
+}
+#feedback-message.red {
+    color: red;
+}
