@@ -170,6 +170,7 @@ nextPageButton.addEventListener('click', () => {
     console.log("Next Page button clicked!"); 
     if (submitted) {
         window.location.reload();
+        window.scrollTo(0, 0);
     } else {
         console.log("Submit an answer first before proceeding to the next page!");
         feedbackMessage.textContent = 'Submit an answer first before proceeding to the next page!';
