@@ -1,58 +1,5 @@
 // quiz.js
 
-const characters = [
-    "Admiral Ackbar",
-    "Admiral Firmus Piett",
-    "Admiral Holdo",
-    "Admiral Motti",
-    "BB-8",
-    "Bib Fortuna",
-    "Boba Fett",
-    "C-3PO",
-    "Chewbacca",
-    "Chirrut Îmwe",
-    "Count Dooku",
-    "Darth Maul",
-    "Darth Vader",
-    "Emperor Palpatine",
-    "Enfys Nest",
-    "EV-9D9",
-    "Figrin D'an and the Modal Nodes",
-    "Finn",
-    "General Grievous",
-    "Grand Moff Tarkin",
-    "Greedo",
-    "Han Solo",
-    "IG-88",
-    "Jabba the Hutt",
-    "Jango Fett",
-    "K-2SO",
-    "Kylo Ren",
-    "Lando Calrissian",
-    "Lobot",
-    "Luke Skywalker",
-    "Mace Windu",
-    "Max Rebo",
-    "Mon Mothma",
-    "Nien Nunb",
-    "Obi-Wan Kenobi",
-    "Oola",
-    "Padmé Amidala",
-    "Poe Dameron",
-    "Ponda Baba",
-    "Princess Leia",
-    "Q'ira",
-    "Qui-Gon Jinn",
-    "R2-D2",
-    "Rey",
-    "Salacious B. Crumb",
-    "Sebulba",
-    "Uncle Owen",
-    "Wedge Antilles",
-    "Wicket W. Warrick",
-    "Yoda"
-];
-
 const imagePaths = {
     "Admiral Ackbar": "./resources/images/admiral_ackbar.webp",
     "Admiral Firmus Piett": "./resources/images/admiral_firmus_piett.webp",
@@ -107,6 +54,16 @@ const imagePaths = {
 };
 
 
+let savedCorrectCount = parseInt(sessionStorage.getItem('correctCount')) || 0;
+let savedIncorrectCount = parseInt(sessionStorage.getItem('incorrectCount')) || 0;
+let savedTotalQuestions = parseInt(sessionStorage.getItem('totalQuestions')) || 0;
+
+const characterNames = Object.keys(imagePaths);
+const randomIndex = Math.floor(Math.random() * characterNames.length);
+const selectedCharacter = characterNames[randomIndex];
+const characterImage = document.getElementById("character-img");
+characterImage.src = imagePaths[selectedCharacter];
+
 function randomChoice(imagePaths) {
     const characterNames = Object.values(imagePaths);
     const shuffledCharacterNames = [...characterNames];
@@ -119,22 +76,22 @@ function randomChoice(imagePaths) {
     return shuffledCharacterNames;
 }
 
+let usedAnswers = sessionStorage.getItem('usedAnswers') || [];
 
-
-function displayQuestion(correctAnswer, imagePaths) {
-    const shuffledChoices = randomChoice(Object.values(imagePaths).filter(choice => choice !== correctAnswer));
+function displayQuestion(correctAnswer, usedAnswers) {
+    const shuffledChoices = randomChoice(characterNames).filter(choice => choice !== correctAnswer);
     const buttonElements = document.querySelectorAll(".answers");
     const randomIndex = Math.floor(Math.random() * 4);
+    let choiceIndex = 0;
     buttonElements.forEach((button, index) => {
         if (index === randomIndex) {
             button.textContent = correctAnswer;
+            choiceIndex++;
         } else {
             button.textContent = shuffledChoices.pop();
         }
     });
 }
-
-
 
 function shuffleButtons() {
     const buttonsContainer = document.getElementById("answers");
@@ -145,26 +102,17 @@ function shuffleButtons() {
     }
 }
 
-const characterNames = Object.keys(imagePaths);
-const randomIndex = Math.floor(Math.random() * characterNames.length);
-const selectedCharacter = characterNames[randomIndex];
 
-
-const characterImage = document.getElementById("character-img");
-characterImage.src = imagePaths[selectedCharacter];
-
-
+// multiple choice buttons and submit button //
 
 let correctAnswer = selectedCharacter;
 let correctCount = 0;
 let incorrectCount = 0;
 let totalQuestions = 0;
 
-
 const choiceButton = document.querySelectorAll(".choice1, .choice2, .choice3, .correct");
 let userAnswer;
 let feedbackMessage = document.getElementById('feedback-message');
-
 
 for (const button of choiceButton) {
   button.addEventListener('click', () => {
@@ -176,15 +124,8 @@ for (const button of choiceButton) {
 
 const submitButton = document.getElementById('submit');
 const choiceButtons = document.querySelectorAll(".answers");
-let storedData = window.name;
-
-
 let submitted = false;
 
-
-// ... (your existing code)
-
-// When the user submits an answer
 submitButton.addEventListener('click', () => {
     let isCorrect = userAnswer === correctAnswer;
     for (const button of choiceButtons) {
@@ -193,39 +134,34 @@ submitButton.addEventListener('click', () => {
     console.log("Correct answer:", correctAnswer);
     console.log("User's answer:", userAnswer);
     console.log("Is correct?", isCorrect);
+    submitted = true;
     submitButton.disabled = true;
-
     if (isCorrect) {
         correctCount++;
-        feedbackMessage.textContent = "That's Correct! You are one with the Force";
+        savedCorrectCount++;
+        totalQuestions++;
+        savedTotalQuestions++;
+        console.log(`Correct answers: ${savedCorrectCount}/${savedTotalQuestions}`);
+        feedbackMessage.textContent = `That's Correct! You are one with the Force! `;
+        feedbackMessage.textContent += `Correct answers: ${savedCorrectCount}/${savedTotalQuestions}`;
         feedbackMessage.classList.add('green');
     } else {
         incorrectCount++;
-        feedbackMessage.textContent = "WRONG!! The Jedi Council does not grant you the rank of Master";
+        savedIncorrectCount++;
+        totalQuestions++;
+        savedTotalQuestions++;
+        console.log(`Incorrect answers: ${savedIncorrectCount}/${savedTotalQuestions}`);
+        feedbackMessage.textContent = `WRONG!! The Jedi Council does not grant you the rank of Master! `;
+        feedbackMessage.textContent += `Correct answers: ${savedCorrectCount}/${savedTotalQuestions}`;
         feedbackMessage.classList.add('red');
     }
-    totalQuestions++;
-    submitted = true;
-    console.log(`Correct answers: ${correctCount}/${totalQuestions}`);
-    console.log(`Incorrect answers: ${incorrectCount}/${totalQuestions}`);
-    
-    // Save the scores to local storage
-    localStorage.setItem('correctCount', correctCount);
-    localStorage.setItem('incorrectCount', incorrectCount);
-    localStorage.setItem('totalQuestions', totalQuestions);
+    sessionStorage.setItem('correctCount', correctCount);
+    sessionStorage.setItem('incorrectCount', incorrectCount);
+    sessionStorage.setItem('totalQuestions', totalQuestions);
+    sessionStorage.setItem('correctCount', savedCorrectCount);
+    sessionStorage.setItem('incorrectCount', savedIncorrectCount);
+    sessionStorage.setItem('totalQuestions', savedTotalQuestions);    
 });
-
-// ... (rest of your existing code)
-
-// When the page loads (e.g., in your initialization logic)
-const savedCorrectCount = parseInt(localStorage.getItem('correctCount')) || 0;
-const savedIncorrectCount = parseInt(localStorage.getItem('incorrectCount')) || 0;
-const savedTotalQuestions = parseInt(localStorage.getItem('totalQuestions')) || 0;
-
-// Display the saved scores wherever needed
-console.log(`Saved correct answers: ${savedCorrectCount}`);
-console.log(`Saved incorrect answers: ${savedIncorrectCount}`);
-console.log(`Saved total questions answered: ${savedTotalQuestions}`);
 
 
 const nextPageButton = document.getElementById('next-page');
@@ -236,8 +172,53 @@ nextPageButton.addEventListener('click', () => {
         window.location.reload();
     } else {
         console.log("Submit an answer first before proceeding to the next page!");
+        feedbackMessage.textContent = 'Submit an answer first before proceeding to the next page!';
     }
 });
 
-displayQuestion(correctAnswer, characters);
+
+// results page //
+
+let percent = document.getElementById('percent');
+let percentMessage = document.getElementById('percent-message');
+
+function fractionToPercentage(numerator, denominator) {
+    const decimal = numerator / denominator;
+    const percentage = Math.round(decimal * 100);
+    return percentage;
+}
+
+function displayResults() {
+    sessionStorage.getItem(savedCorrectCount);
+    sessionStorage.getItem(savedTotalQuestions);
+    console.log(savedCorrectCount);
+    let percentage = fractionToPercentage(savedCorrectCount, savedTotalQuestions);
+    percent.textContent = `${percentage}`;
+    if (percentage >= 70) {
+        percent.classList.add('green');
+        percentMessage.classList.add('green');
+        percentMessage.textContent = `You passed! May the Force be with You.`;
+    } else {
+        percent.classList.add('red');
+        percentMessage.classList.add('red');
+        percentMessage.textContent = `You failed! You were supposed to be the chosen one!`;
+    }
+    
+}
+
+const resetButton = document.getElementById('reset-quiz');
+
+function resetQuiz() {
+    sessionStorage.setItem('savedCorrectCount') = 0;
+    sessionStorage.setItem('savedIncorrectCount') = 0;
+    sessionStorage.setItem('savedTotalQuestions') = 0;
+}
+
+
+
+
+
+displayQuestion(correctAnswer, imagePaths);
 shuffleButtons();
+
+

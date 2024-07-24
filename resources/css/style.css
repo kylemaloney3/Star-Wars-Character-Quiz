@@ -1,3 +1,5 @@
+/* css for index.html */
+
 * {
     padding: 0;
     margin: 0;
@@ -29,7 +31,7 @@ html {
     max-width: 650px;
     min-width: 275px;
     height: 500px;
-    margin: 0 auto 75px;
+    margin: 0 auto 45px;
     object-fit: cover;
 }
 #character-img {
@@ -49,6 +51,7 @@ html {
     max-width: 750px;
     margin: 0 auto;
     padding-top: 15px;
+    border-radius: 3px;
 }
 button:not(:last-child) {
     padding: 15px;
@@ -70,11 +73,12 @@ button:not(:last-child):focus {
     background-color: skyblue;
     width: 150px;
     height: 40px;
-    margin: 15px auto;
+    margin: 15px auto 15px;
     color: black;
     text-align: center;
     font-size: 18px;
     border: none;
+    border-radius: 3px;
 }
 #submit:hover {
     background-color: orange;
@@ -110,6 +114,7 @@ button:not(:last-child):focus {
     font-size: 18px;
     border: none;
     padding-top: 20px;
+    border-radius: 3px;
 }
 #next-page:hover {
     background-color: orange;
@@ -118,28 +123,24 @@ button:not(:last-child):focus {
     background-color: lightyellow;
     display: flex;
     width: 250px;
-    height: 60px;
-    margin: 15px auto 0;
+    height: 40px;
+    margin: 15px auto;
     color: black;
     text-align: center;
     justify-content: center;
-    align-content: center;
-    font-size: 18px;
-    border: none;
     padding-top: 20px;
+    border: none;
+    text-decoration: none;
+    border-radius: 3px;
 }
 #quit:hover {
     background-color: maroon;
     color: white;
 }
-#quit a {
-    text-decoration: none;
-    color: black;
-}
 #line {
     border: 2px solid maroon;
     width: 60%;
-    margin: 0 auto;
+    margin: 0 auto 25px;
     opacity: 50%;
 }
 #feedback-message {
@@ -156,4 +157,58 @@ button:not(:last-child):focus {
 }
 #feedback-message.red {
     color: red;
+}
+
+/* css for results.html */
+
+#score {
+    display: flex;
+    flex-direction: column;
+    margin: 45px auto;
+    text-align: center;
+    width: 30%;
+}
+#percent {
+    color: white;
+    font-size: 78px;
+    padding-top: 20px;
+}
+#percent.green {
+    color: green;
+}
+#percent.red {
+    color: red;
+}
+#percent-message {
+    color: white;
+    font-size: 26px;
+    padding-top: 20px;
+}
+#percent-message.green {
+    color: green;
+}
+#percent-message.red {
+    color: red;
+}
+#reset {
+    display: flex;
+    margin: 0 auto;
+    width: 30%;
+    text-align: center;
+    justify-content: center;
+    background-color: white;
+}
+#reset-quiz {
+    border: 0;
+    font-size: 18px;
+    padding: 15px;
+    width: 100%;
+}
+#reset-quiz:hover {
+    color: black;
+    background-color: orange;
+}
+#reset a {
+    text-decoration: none;
+    color: black;
 }
